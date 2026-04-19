@@ -1,0 +1,201 @@
+{
+  "BlueCross Standard": {
+    "adalimumab": {
+      "brand_name": "Humira",
+      "drug_class": "Biologic DMARD (TNF inhibitor)",
+      "criteria": [
+        {
+          "id": "BC-ADA-1",
+          "description": "Confirmed diagnosis of moderate-to-severe rheumatoid arthritis, psoriatic arthritis, or ankylosing spondylitis by a rheumatologist or specialist",
+          "required": true
+        },
+        {
+          "id": "BC-ADA-2",
+          "description": "Trial and documented failure of at least 2 conventional DMARDs (e.g., methotrexate, hydroxychloroquine, sulfasalazine, leflunomide) for a minimum of 3 months each at adequate dosing",
+          "required": true
+        },
+        {
+          "id": "BC-ADA-3",
+          "description": "Current disease activity score indicating moderate-to-severe disease: DAS28 > 3.2, CDAI > 10, or SDAI > 11",
+          "required": true
+        },
+        {
+          "id": "BC-ADA-4",
+          "description": "No active tuberculosis or untreated latent TB (negative TB screening required within last 12 months)",
+          "required": true
+        },
+        {
+          "id": "BC-ADA-5",
+          "description": "Prescriber is a board-certified rheumatologist or has documented rheumatology consultation",
+          "required": false
+        }
+      ],
+      "documentation_required": [
+        "Rheumatologist clinical notes confirming diagnosis",
+        "Records of prior DMARD trials with dates and dosages",
+        "Recent disease activity score or equivalent clinical assessment",
+        "TB screening results (QuantiFERON or PPD within 12 months)"
+      ],
+      "typical_timeline": "5-10 business days",
+      "appeal_available": true
+    },
+    "dupilumab": {
+      "brand_name": "Dupixent",
+      "drug_class": "IL-4/IL-13 receptor antagonist (biologic)",
+      "criteria": [
+        {
+          "id": "BC-DUP-1",
+          "description": "Confirmed diagnosis of moderate-to-severe asthma with eosinophilic phenotype or oral corticosteroid-dependent asthma",
+          "required": true
+        },
+        {
+          "id": "BC-DUP-2",
+          "description": "Inadequate control on inhaled corticosteroid (ICS) plus at least one additional controller medication (LABA, LAMA, or leukotriene modifier) at maximum tolerated doses for at least 3 months",
+          "required": true
+        },
+        {
+          "id": "BC-DUP-3",
+          "description": "Blood eosinophil count >= 300 cells/mcL OR fractional exhaled nitric oxide (FeNO) >= 25 ppb within the past 12 months",
+          "required": true
+        },
+        {
+          "id": "BC-DUP-4",
+          "description": "At least 2 asthma exacerbations requiring systemic corticosteroids in the past 12 months, OR currently dependent on oral corticosteroids",
+          "required": false
+        }
+      ],
+      "documentation_required": [
+        "Pulmonologist or allergist clinical notes",
+        "Records of current and prior controller medications with dosages",
+        "Recent CBC with differential showing eosinophil count",
+        "Spirometry results from past 12 months"
+      ],
+      "typical_timeline": "7-14 business days",
+      "appeal_available": true
+    }
+  },
+  "Aetna Premium": {
+    "insulin_pump": {
+      "brand_name": "Omnipod / Medtronic MiniMed",
+      "drug_class": "Insulin delivery device (continuous subcutaneous insulin infusion)",
+      "criteria": [
+        {
+          "id": "AE-INS-1",
+          "description": "Confirmed diagnosis of Type 1 or insulin-dependent Type 2 diabetes mellitus",
+          "required": true
+        },
+        {
+          "id": "AE-INS-2",
+          "description": "HbA1c >= 8.0% despite intensive conventional insulin therapy (multiple daily injections) for at least 6 months",
+          "required": true
+        },
+        {
+          "id": "AE-INS-3",
+          "description": "Documentation of at least 4 self-monitored blood glucose readings per day for the past 30 days",
+          "required": true
+        },
+        {
+          "id": "AE-INS-4",
+          "description": "Completed diabetes education program (DSMES) or equivalent documented training",
+          "required": true
+        },
+        {
+          "id": "AE-INS-5",
+          "description": "Patient demonstrates willingness and ability to use continuous glucose monitoring (CGM) in conjunction with pump therapy",
+          "required": false
+        }
+      ],
+      "documentation_required": [
+        "Endocrinologist or primary care notes confirming diabetes type and duration",
+        "HbA1c results from past 3 months",
+        "Blood glucose log or CGM data for past 30 days",
+        "Certificate of diabetes education completion",
+        "Letter of medical necessity from prescribing physician"
+      ],
+      "typical_timeline": "10-15 business days",
+      "appeal_available": true
+    },
+    "ketamine_infusion": {
+      "brand_name": "IV Ketamine (compounded)",
+      "drug_class": "NMDA receptor antagonist (off-label antidepressant)",
+      "criteria": [
+        {
+          "id": "AE-KET-1",
+          "description": "Confirmed diagnosis of Major Depressive Disorder (MDD) or Treatment-Resistant Depression (TRD), defined as failure of at least 4 adequate antidepressant trials",
+          "required": true
+        },
+        {
+          "id": "AE-KET-2",
+          "description": "Failed trials of at least 4 different antidepressants from at least 2 different drug classes, each at therapeutic dose for minimum 8 weeks",
+          "required": true
+        },
+        {
+          "id": "AE-KET-3",
+          "description": "Current active suicidal ideation OR PHQ-9 score >= 15 (moderate-severe depression)",
+          "required": true
+        },
+        {
+          "id": "AE-KET-4",
+          "description": "Psychiatrist referral and recommendation for ketamine therapy",
+          "required": true
+        },
+        {
+          "id": "AE-KET-5",
+          "description": "No history of psychosis, schizophrenia, or active substance use disorder",
+          "required": true
+        }
+      ],
+      "documentation_required": [
+        "Psychiatrist clinical notes with TRD diagnosis",
+        "Complete medication history showing failed antidepressant trials with dates and doses",
+        "Current PHQ-9 or equivalent depression scale score",
+        "Letter of medical necessity from psychiatrist",
+        "Substance use screening results"
+      ],
+      "typical_timeline": "14-21 business days",
+      "appeal_available": true
+    }
+  },
+  "United Silver": {
+    "amphetamine_xr": {
+      "brand_name": "Adderall XR",
+      "drug_class": "CNS stimulant (amphetamine salts)",
+      "criteria": [
+        {
+          "id": "US-AMP-1",
+          "description": "Confirmed diagnosis of ADHD (Attention-Deficit/Hyperactivity Disorder) by a licensed psychiatrist or neurologist using DSM-5 criteria",
+          "required": true
+        },
+        {
+          "id": "US-AMP-2",
+          "description": "Trial and inadequate response to at least one non-stimulant ADHD medication (atomoxetine, guanfacine ER, or clonidine ER) for minimum 8 weeks at therapeutic dose",
+          "required": true
+        },
+        {
+          "id": "US-AMP-3",
+          "description": "Documented functional impairment in at least 2 life domains (work/school, social, family) as evidenced by standardized rating scale (CAARS, ASRS, or equivalent)",
+          "required": true
+        },
+        {
+          "id": "US-AMP-4",
+          "description": "No current untreated cardiovascular conditions including uncontrolled hypertension, structural heart defects, or history of sudden cardiac death in family",
+          "required": true
+        },
+        {
+          "id": "US-AMP-5",
+          "description": "Specialist (psychiatrist or neurologist) must be the prescribing physician or co-managing the case",
+          "required": true
+        }
+      ],
+      "documentation_required": [
+        "Psychiatrist or neurologist evaluation confirming DSM-5 ADHD diagnosis",
+        "Standardized ADHD rating scale scores (CAARS, ASRS, or Conners)",
+        "Records of prior non-stimulant medication trials",
+        "Recent cardiovascular assessment or EKG if indicated",
+        "Functional impairment documentation from employer, school, or therapist"
+      ],
+      "typical_timeline": "7-10 business days",
+      "appeal_available": true
+    }
+  }
+}

@@ -1,0 +1,335 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pa-mcp-carla-003",
+        "identifier": [
+          {
+            "system": "https://pa-mcp-server.example/synthetic-patients",
+            "value": "pa-mcp-carla-003"
+          }
+        ],
+        "active": true,
+        "name": [
+          { "use": "official", "family": "Reyes", "given": ["Carla", "Maria"] }
+        ],
+        "gender": "female",
+        "birthDate": "1997-11-30",
+        "address": [
+          {
+            "use": "home",
+            "city": "Milwaukee",
+            "state": "WI",
+            "postalCode": "53201",
+            "country": "US"
+          }
+        ]
+      },
+      "request": { "method": "PUT", "url": "Patient/pa-mcp-carla-003" }
+    },
+    {
+      "resource": {
+        "resourceType": "Coverage",
+        "id": "pa-mcp-carla-coverage",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+              "code": "HIP"
+            }
+          ],
+          "text": "United Silver"
+        },
+        "subscriber": { "reference": "Patient/pa-mcp-carla-003" },
+        "beneficiary": { "reference": "Patient/pa-mcp-carla-003" },
+        "payor": [{ "display": "United Silver" }]
+      },
+      "request": { "method": "PUT", "url": "Coverage/pa-mcp-carla-coverage" }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "pa-mcp-carla-condition-adhd",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10-cm",
+              "code": "F90.2",
+              "display": "Attention-deficit hyperactivity disorder, combined type"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "406506008",
+              "display": "Attention deficit hyperactivity disorder"
+            }
+          ],
+          "text": "ADHD combined presentation, DSM-5 diagnosed"
+        },
+        "subject": { "reference": "Patient/pa-mcp-carla-003" },
+        "onsetDateTime": "2024-09-15",
+        "recordedDate": "2024-09-15",
+        "note": [
+          {
+            "text": "ADHD combined presentation diagnosed September 2024 by psychiatrist using DSM-5 criteria. Significant occupational (software developer, missed deadlines, PIP) and social (2 relationship disruptions) impairment. CAARS score 40/72 (T-score 78, Very Much Elevated)."
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Condition/pa-mcp-carla-condition-adhd"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "pa-mcp-carla-med-atomoxetine",
+        "status": "stopped",
+        "statusReason": [
+          {
+            "text": "Inadequate response with persistent nausea"
+          }
+        ],
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "38400",
+              "display": "Atomoxetine"
+            }
+          ],
+          "text": "Atomoxetine (Strattera) titrated 40mg to 80mg daily"
+        },
+        "subject": { "reference": "Patient/pa-mcp-carla-003" },
+        "effectivePeriod": {
+          "start": "2025-10-01",
+          "end": "2026-01-15"
+        },
+        "dateAsserted": "2026-01-15",
+        "note": [
+          {
+            "text": "Non-stimulant trial #1. 14 weeks total (4 weeks titration + 10 weeks maintenance at 80mg). Discontinued due to inadequate response (CAARS score unchanged at 39/72) and persistent GI side effects."
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationStatement/pa-mcp-carla-med-atomoxetine"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "pa-mcp-carla-med-guanfacine",
+        "status": "stopped",
+        "statusReason": [
+          { "text": "Excessive sedation with no clinically meaningful improvement" }
+        ],
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "864089",
+              "display": "Guanfacine extended release"
+            }
+          ],
+          "text": "Guanfacine ER (Intuniv) titrated 1mg to 3mg daily"
+        },
+        "subject": { "reference": "Patient/pa-mcp-carla-003" },
+        "effectivePeriod": {
+          "start": "2026-01-16",
+          "end": "2026-03-20"
+        },
+        "dateAsserted": "2026-03-20",
+        "note": [
+          {
+            "text": "Non-stimulant trial #2. 12 weeks total (3 weeks titration + 9 weeks maintenance at 3mg). Discontinued due to excessive sedation with no meaningful improvement."
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationStatement/pa-mcp-carla-med-guanfacine"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "pa-mcp-carla-obs-caars",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "survey"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "99069-5",
+              "display": "Adult ADHD rating scale"
+            }
+          ],
+          "text": "CAARS (Conners Adult ADHD Rating Scale) Self-Report"
+        },
+        "subject": { "reference": "Patient/pa-mcp-carla-003" },
+        "effectiveDateTime": "2026-03-20",
+        "valueQuantity": {
+          "value": 40,
+          "unit": "score",
+          "system": "http://unitsofmeasure.org"
+        },
+        "interpretation": [
+          {
+            "text": "T-score 78, Very Much Elevated range, markedly elevated inattention and hyperactivity/impulsivity subscales"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/pa-mcp-carla-obs-caars"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "pa-mcp-carla-obs-bp",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            { "system": "http://loinc.org", "code": "85354-9", "display": "Blood pressure panel" }
+          ],
+          "text": "Blood Pressure"
+        },
+        "subject": { "reference": "Patient/pa-mcp-carla-003" },
+        "effectiveDateTime": "2026-03-20",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                { "system": "http://loinc.org", "code": "8480-6", "display": "Systolic blood pressure" }
+              ]
+            },
+            "valueQuantity": {
+              "value": 118,
+              "unit": "mmHg"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                { "system": "http://loinc.org", "code": "8462-4", "display": "Diastolic blood pressure" }
+              ]
+            },
+            "valueQuantity": {
+              "value": 74,
+              "unit": "mmHg"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/pa-mcp-carla-obs-bp"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "pa-mcp-carla-obs-ekg",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "procedure"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            { "system": "http://loinc.org", "code": "11524-6", "display": "EKG study" }
+          ],
+          "text": "Electrocardiogram"
+        },
+        "subject": { "reference": "Patient/pa-mcp-carla-003" },
+        "effectiveDateTime": "2026-02-15",
+        "valueCodeableConcept": {
+          "text": "Normal sinus rhythm, no abnormalities. No family history of sudden cardiac death or structural heart disease."
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/pa-mcp-carla-obs-ekg"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "pa-mcp-carla-med-request",
+        "status": "draft",
+        "intent": "proposal",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "1087402",
+              "display": "Amphetamine mixed salts extended release"
+            }
+          ],
+          "text": "Adderall XR (amphetamine salts extended release) 20mg PO QAM with planned titration"
+        },
+        "subject": { "reference": "Patient/pa-mcp-carla-003" },
+        "authoredOn": "2026-03-26",
+        "requester": {
+          "display": "Dr. James Okonkwo, MD (Psychiatry, NPI 5551234567)"
+        },
+        "reasonCode": [
+          {
+            "text": "ADHD combined presentation, treatment-refractory to 2 non-stimulant agents"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationRequest/pa-mcp-carla-med-request"
+      }
+    }
+  ]
+}

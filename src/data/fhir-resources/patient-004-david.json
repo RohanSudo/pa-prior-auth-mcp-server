@@ -1,0 +1,338 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pa-mcp-david-004",
+        "identifier": [
+          {
+            "system": "https://pa-mcp-server.example/synthetic-patients",
+            "value": "pa-mcp-david-004"
+          }
+        ],
+        "active": true,
+        "name": [
+          { "use": "official", "family": "Patel", "given": ["David", "Raj"] }
+        ],
+        "gender": "male",
+        "birthDate": "1965-05-08",
+        "address": [
+          { "use": "home", "city": "Chicago", "state": "IL", "postalCode": "60602", "country": "US" }
+        ]
+      },
+      "request": { "method": "PUT", "url": "Patient/pa-mcp-david-004" }
+    },
+    {
+      "resource": {
+        "resourceType": "Coverage",
+        "id": "pa-mcp-david-coverage",
+        "status": "active",
+        "type": {
+          "coding": [
+            { "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "HIP" }
+          ],
+          "text": "BlueCross Standard"
+        },
+        "subscriber": { "reference": "Patient/pa-mcp-david-004" },
+        "beneficiary": { "reference": "Patient/pa-mcp-david-004" },
+        "payor": [{ "display": "BlueCross Standard" }]
+      },
+      "request": { "method": "PUT", "url": "Coverage/pa-mcp-david-coverage" }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "pa-mcp-david-condition-asthma",
+        "clinicalStatus": {
+          "coding": [
+            { "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            { "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" }
+          ]
+        },
+        "severity": {
+          "coding": [
+            { "system": "http://snomed.info/sct", "code": "24484000", "display": "Severe" }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10-cm",
+              "code": "J45.51",
+              "display": "Severe persistent asthma with (acute) exacerbation"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "370218001",
+              "display": "Severe persistent asthma"
+            }
+          ],
+          "text": "Severe eosinophilic asthma, oral-corticosteroid dependent"
+        },
+        "subject": { "reference": "Patient/pa-mcp-david-004" },
+        "onsetDateTime": "2006-03-01",
+        "recordedDate": "2006-03-01",
+        "note": [
+          {
+            "text": "20-year history of asthma, currently classified as severe persistent based on GINA criteria. Oral-corticosteroid dependent (6 months continuous prednisone). 4 asthma exacerbations requiring systemic corticosteroids in past 12 months including 1 ED visit October 2025."
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Condition/pa-mcp-david-condition-asthma"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "pa-mcp-david-med-advair",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "896209",
+              "display": "Fluticasone/Salmeterol 500/50"
+            }
+          ],
+          "text": "Fluticasone/salmeterol (Advair Diskus) 500/50mcg twice daily (maximum dose ICS/LABA)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-david-004" },
+        "effectiveDateTime": "2020-01-01",
+        "dateAsserted": "2026-03-25"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationStatement/pa-mcp-david-med-advair"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "pa-mcp-david-med-tiotropium",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "861458",
+              "display": "Tiotropium"
+            }
+          ],
+          "text": "Tiotropium (Spiriva) 18mcg inhaled once daily (LAMA)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-david-004" },
+        "effectiveDateTime": "2022-06-01",
+        "dateAsserted": "2026-03-25"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationStatement/pa-mcp-david-med-tiotropium"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "pa-mcp-david-med-montelukast",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "88249",
+              "display": "Montelukast"
+            }
+          ],
+          "text": "Montelukast (Singulair) 10mg daily (leukotriene modifier)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-david-004" },
+        "effectiveDateTime": "2023-01-01",
+        "dateAsserted": "2026-03-25"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationStatement/pa-mcp-david-med-montelukast"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "pa-mcp-david-med-prednisone",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [
+            { "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "8640", "display": "Prednisone" }
+          ],
+          "text": "Prednisone 10mg daily (oral-corticosteroid dependent for 6 months continuous)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-david-004" },
+        "effectiveDateTime": "2025-09-25",
+        "dateAsserted": "2026-03-25",
+        "note": [
+          {
+            "text": "Patient has been continuously dependent on systemic corticosteroids for 6 months. Meets criteria for oral corticosteroid-dependent asthma."
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationStatement/pa-mcp-david-med-prednisone"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "pa-mcp-david-obs-eosinophils",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            { "system": "http://loinc.org", "code": "711-2", "display": "Eosinophils [#/volume] in Blood" }
+          ],
+          "text": "Blood eosinophil count"
+        },
+        "subject": { "reference": "Patient/pa-mcp-david-004" },
+        "effectiveDateTime": "2026-03-20",
+        "valueQuantity": {
+          "value": 520,
+          "unit": "cells/mcL",
+          "system": "http://unitsofmeasure.org"
+        },
+        "referenceRange": [{ "high": { "value": 300, "unit": "cells/mcL" } }],
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "H",
+                "display": "High"
+              }
+            ],
+            "text": "Markedly elevated, confirms type 2 inflammatory phenotype"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/pa-mcp-david-obs-eosinophils"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "pa-mcp-david-obs-feno",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            { "system": "http://loinc.org", "code": "62712-3", "display": "Fractional exhaled nitric oxide" }
+          ],
+          "text": "FeNO (Fractional exhaled nitric oxide)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-david-004" },
+        "effectiveDateTime": "2026-03-20",
+        "valueQuantity": {
+          "value": 38,
+          "unit": "ppb",
+          "system": "http://unitsofmeasure.org"
+        },
+        "interpretation": [
+          {
+            "text": "Elevated, indicates type 2 airway inflammation"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/pa-mcp-david-obs-feno"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "pa-mcp-david-obs-fev1",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            { "system": "http://loinc.org", "code": "19868-9", "display": "FEV1/FVC ratio" }
+          ],
+          "text": "FEV1 (Forced Expiratory Volume in 1 second)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-david-004" },
+        "effectiveDateTime": "2026-03-20",
+        "valueQuantity": {
+          "value": 62,
+          "unit": "% predicted",
+          "system": "http://unitsofmeasure.org"
+        },
+        "note": [
+          {
+            "text": "Pre-bronchodilator FEV1 62% predicted, post-bronchodilator 68%. Obstructive pattern (FEV1/FVC 0.65)."
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/pa-mcp-david-obs-fev1"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "pa-mcp-david-med-request",
+        "status": "draft",
+        "intent": "proposal",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "1922155",
+              "display": "Dupilumab 200 MG/1.14 ML Injection"
+            }
+          ],
+          "text": "Dupilumab (Dupixent) 200mg subcutaneous every 2 weeks"
+        },
+        "subject": { "reference": "Patient/pa-mcp-david-004" },
+        "authoredOn": "2026-03-25",
+        "requester": {
+          "display": "Dr. Priya Sharma, MD (Pulmonology & Allergy, NPI 3334445556)"
+        },
+        "reasonCode": [
+          {
+            "text": "Severe eosinophilic asthma, oral-corticosteroid dependent, inadequately controlled on maximum ICS/LABA/LAMA + leukotriene modifier"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationRequest/pa-mcp-david-med-request"
+      }
+    }
+  ]
+}

@@ -1,0 +1,391 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:patient-bob",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pa-mcp-bob-002",
+        "identifier": [
+          {
+            "system": "https://pa-mcp-server.example/synthetic-patients",
+            "value": "pa-mcp-bob-002"
+          }
+        ],
+        "active": true,
+        "name": [
+          { "use": "official", "family": "Kowalski", "given": ["Bob", "Thomas"] }
+        ],
+        "gender": "male",
+        "birthDate": "1974-07-22",
+        "address": [
+          {
+            "use": "home",
+            "city": "Indianapolis",
+            "state": "IN",
+            "postalCode": "46201",
+            "country": "US"
+          }
+        ]
+      },
+      "request": { "method": "PUT", "url": "Patient/pa-mcp-bob-002" }
+    },
+    {
+      "resource": {
+        "resourceType": "Coverage",
+        "id": "pa-mcp-bob-coverage",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+              "code": "HIP",
+              "display": "health insurance plan policy"
+            }
+          ],
+          "text": "Aetna Premium"
+        },
+        "subscriber": { "reference": "Patient/pa-mcp-bob-002" },
+        "beneficiary": { "reference": "Patient/pa-mcp-bob-002" },
+        "payor": [{ "display": "Aetna Premium" }]
+      },
+      "request": { "method": "PUT", "url": "Coverage/pa-mcp-bob-coverage" }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "pa-mcp-bob-condition-t2dm",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "problem-list-item"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10-cm",
+              "code": "E11.65",
+              "display": "Type 2 diabetes mellitus with hyperglycemia"
+            },
+            {
+              "system": "http://snomed.info/sct",
+              "code": "44054006",
+              "display": "Diabetes mellitus type 2"
+            }
+          ],
+          "text": "Insulin-dependent Type 2 Diabetes Mellitus, poorly controlled"
+        },
+        "subject": { "reference": "Patient/pa-mcp-bob-002" },
+        "onsetDateTime": "2014-06-01",
+        "recordedDate": "2014-06-01",
+        "note": [
+          {
+            "text": "12-year history of Type 2 diabetes, insulin-dependent for 5 years. HbA1c consistently above target despite intensive MDI therapy. Patient has experienced multiple hypoglycemic events with glycemic variability limiting quality of life."
+          }
+        ]
+      },
+      "request": { "method": "PUT", "url": "Condition/pa-mcp-bob-condition-t2dm" }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "pa-mcp-bob-med-glargine",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "1008492",
+              "display": "Insulin glargine"
+            }
+          ],
+          "text": "Insulin glargine U-300 (Toujeo) 52 units at bedtime"
+        },
+        "subject": { "reference": "Patient/pa-mcp-bob-002" },
+        "effectiveDateTime": "2021-03-15",
+        "dateAsserted": "2026-03-27"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationStatement/pa-mcp-bob-med-glargine"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "pa-mcp-bob-med-lispro",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "261551",
+              "display": "Insulin lispro"
+            }
+          ],
+          "text": "Insulin lispro (Humalog) per sliding scale TID with meals (avg 8-12 units per dose)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-bob-002" },
+        "effectiveDateTime": "2021-03-15",
+        "dateAsserted": "2026-03-27",
+        "note": [
+          {
+            "text": "Total daily insulin dose approximately 85-90 units. Part of intensive multiple daily injection (MDI) regimen."
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationStatement/pa-mcp-bob-med-lispro"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationStatement",
+        "id": "pa-mcp-bob-med-metformin",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "6809",
+              "display": "Metformin"
+            }
+          ],
+          "text": "Metformin 1000mg twice daily"
+        },
+        "subject": { "reference": "Patient/pa-mcp-bob-002" },
+        "effectiveDateTime": "2014-06-15",
+        "dateAsserted": "2026-03-27"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationStatement/pa-mcp-bob-med-metformin"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "pa-mcp-bob-obs-a1c-current",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+            }
+          ],
+          "text": "HbA1c"
+        },
+        "subject": { "reference": "Patient/pa-mcp-bob-002" },
+        "effectiveDateTime": "2025-12-15",
+        "valueQuantity": {
+          "value": 9.2,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        },
+        "referenceRange": [{ "high": { "value": 7.0, "unit": "%" } }],
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "H",
+                "display": "High"
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/pa-mcp-bob-obs-a1c-current"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "pa-mcp-bob-obs-a1c-prior",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+            }
+          ],
+          "text": "HbA1c (6 months prior)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-bob-002" },
+        "effectiveDateTime": "2025-09-15",
+        "valueQuantity": {
+          "value": 9.0,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "H",
+                "display": "High"
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/pa-mcp-bob-obs-a1c-prior"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "pa-mcp-bob-obs-tir",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "97507-8",
+              "display": "Glucose time in range from continuous glucose monitoring"
+            }
+          ],
+          "text": "CGM Time in Range (30 days)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-bob-002" },
+        "effectiveDateTime": "2026-03-15",
+        "valueQuantity": {
+          "value": 38,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org"
+        },
+        "note": [
+          {
+            "text": "30-day CGM data: Time-in-range 38%, 6 hypoglycemic events (<70 mg/dL), 3 severe hypoglycemic events (<54 mg/dL). Patient performs 4-6 self-monitored blood glucose readings daily with detailed log."
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/pa-mcp-bob-obs-tir"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "pa-mcp-bob-proc-dsmes",
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "713114005",
+              "display": "Diabetes self-management education"
+            }
+          ],
+          "text": "Diabetes Self-Management Education and Support (DSMES) - ADA-recognized program"
+        },
+        "subject": { "reference": "Patient/pa-mcp-bob-002" },
+        "performedDateTime": "2024-08-20",
+        "note": [
+          {
+            "text": "Completed ADA-recognized DSMES program at Midwest Diabetes Center in August 2024. Certificate on file."
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Procedure/pa-mcp-bob-proc-dsmes"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "pa-mcp-bob-med-request",
+        "status": "draft",
+        "intent": "proposal",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "2559296",
+              "display": "Insulin pump (continuous subcutaneous insulin infusion device)"
+            }
+          ],
+          "text": "Omnipod 5 automated insulin delivery system (continuous subcutaneous insulin infusion)"
+        },
+        "subject": { "reference": "Patient/pa-mcp-bob-002" },
+        "authoredOn": "2026-03-27",
+        "requester": {
+          "display": "Dr. Michael Chen, MD (Endocrinology, NPI 9876543210)"
+        },
+        "reasonCode": [
+          {
+            "text": "Poorly controlled insulin-dependent T2DM with HbA1c 9.2% despite optimized MDI therapy and multiple hypoglycemic events"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "MedicationRequest/pa-mcp-bob-med-request"
+      }
+    }
+  ]
+}
