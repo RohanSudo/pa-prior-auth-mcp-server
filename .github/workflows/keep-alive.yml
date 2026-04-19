@@ -10,19 +10,36 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping /health endpoint
+      - name: Ping /health endpoint with retry
         run: |
           URL="${{ vars.RENDER_URL || 'https://pa-prior-auth-mcp-server.onrender.com' }}/health"
-          echo "Pinging: $URL"
-          START=$(date +%s)
-          RESPONSE=$(curl -sS --max-time 60 "$URL")
-          END=$(date +%s)
-          DURATION=$((END - START))
-          echo "Response: $RESPONSE"
-          echo "Duration: ${DURATION}s"
-          if echo "$RESPONSE" | grep -q '"status":"ok"'; then
-            echo "✓ Service is healthy"
-          else
-            echo "✗ Unexpected response"
-            exit 1
-          fi
+          echo "Target: $URL"
+
+          MAX_ATTEMPTS=3
+          for attempt in $(seq 1 $MAX_ATTEMPTS); do
+            echo ""
+            echo "Attempt $attempt of $MAX_ATTEMPTS..."
+            START=$(date +%s)
+            HTTP_CODE=$(curl -sS --max-time 90 -o /tmp/response.txt -w "%{http_code}" "$URL" || echo "000")
+            END=$(date +%s)
+            DURATION=$((END - START))
+            RESPONSE=$(cat /tmp/response.txt 2>/dev/null || echo "")
+
+            echo "HTTP: $HTTP_CODE"
+            echo "Duration: ${DURATION}s"
+            echo "Body: $RESPONSE"
+
+            if [ "$HTTP_CODE" = "200" ] && echo "$RESPONSE" | grep -q '"status":"ok"'; then
+              echo "✓ Service is healthy"
+              exit 0
+            fi
+
+            if [ "$attempt" -lt "$MAX_ATTEMPTS" ]; then
+              echo "Attempt $attempt failed, waiting 30s before retry (server may be cold-starting)..."
+              sleep 30
+            fi
+          done
+
+          echo ""
+          echo "✗ All $MAX_ATTEMPTS attempts failed"
+          exit 1
