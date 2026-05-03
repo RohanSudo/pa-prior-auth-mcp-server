@@ -1,11 +1,69 @@
 import "dotenv/config";
 import axios from "axios";
 
+const PATIENTS = {
+  alice: {
+    id: "pa-mcp-alice-001",
+    drug: "adalimumab",
+    plan: "BlueCross Standard",
+    description: "45F, Rheumatoid Arthritis, requesting Humira",
+  },
+  bob: {
+    id: "pa-mcp-bob-002",
+    drug: "insulin_pump",
+    plan: "Aetna Premium",
+    description: "52M, Type 2 Diabetes, requesting Omnipod insulin pump",
+  },
+  carla: {
+    id: "pa-mcp-carla-003",
+    drug: "amphetamine_xr",
+    plan: "United Silver",
+    description: "28F, Severe ADHD, requesting Adderall XR",
+  },
+  david: {
+    id: "pa-mcp-david-004",
+    drug: "dupilumab",
+    plan: "BlueCross Standard",
+    description: "61M, Severe Asthma, requesting Dupixent",
+  },
+  emma: {
+    id: "pa-mcp-emma-005",
+    drug: "ketamine_infusion",
+    plan: "Aetna Premium",
+    description: "38F, Treatment-Resistant Depression, requesting IV ketamine",
+  },
+} as const;
+
+type PatientKey = keyof typeof PATIENTS;
+
 const SERVER_URL = process.env.DEMO_SERVER_URL || "https://pa-prior-auth-mcp-server.onrender.com";
 const FHIR_SERVER_URL = "https://hapi.fhir.org/baseR4";
-const PATIENT_ID = "pa-mcp-alice-001";
-const DRUG = "adalimumab";
-const PLAN = "BlueCross Standard";
+
+const patientArg = (process.argv[2]?.toLowerCase() || "alice") as string;
+
+if (patientArg === "--help" || patientArg === "-h") {
+  console.log("Usage: npm run demo [patient]");
+  console.log("");
+  console.log("Available patients:");
+  for (const [key, p] of Object.entries(PATIENTS)) {
+    console.log(`  ${key.padEnd(8)} ${p.description}`);
+  }
+  console.log("");
+  console.log("Examples:");
+  console.log("  npm run demo            # uses alice (default)");
+  console.log("  npm run demo bob        # runs the diabetes case");
+  console.log("  npm run demo emma       # runs the depression case");
+  process.exit(0);
+}
+
+if (!(patientArg in PATIENTS)) {
+  console.error(`Unknown patient: ${patientArg}`);
+  console.error(`Available: ${Object.keys(PATIENTS).join(", ")}`);
+  console.error(`Run "npm run demo --help" for details`);
+  process.exit(1);
+}
+
+const PATIENT = PATIENTS[patientArg as PatientKey];
 
 const C = {
   reset: "\x1b[0m",
@@ -62,19 +120,22 @@ async function main(): Promise<void> {
   header("PA Prior Authorization Assistant - Live Demo");
   console.log("");
   info("Server", SERVER_URL);
-  info("Patient", `${PATIENT_ID} (synthetic, public HAPI FHIR sandbox)`);
-  info("Requested treatment", `${DRUG}`);
-  info("Insurance plan", PLAN);
+  info("Patient", `${PATIENT.id} - ${PATIENT.description}`);
+  info("FHIR source", `${FHIR_SERVER_URL} (public HAPI sandbox, synthetic data only)`);
+  info("Requested treatment", PATIENT.drug);
+  info("Insurance plan", PATIENT.plan);
+  console.log("");
+  console.log(`${C.dim}  (Tip: run 'npm run demo bob' or carla/david/emma to try other cases)${C.reset}`);
 
   const startTime = Date.now();
 
   step(1, 4, "build_patient_profile - fetching FHIR data + LLM synthesis");
   const profile = (await callTool(
     "build_patient_profile",
-    { proposed_treatment_code: DRUG, insurance_plan: PLAN },
+    { proposed_treatment_code: PATIENT.drug, insurance_plan: PATIENT.plan },
     {
       "X-FHIR-Server-URL": FHIR_SERVER_URL,
-      "X-Patient-ID": PATIENT_ID,
+      "X-Patient-ID": PATIENT.id,
     }
   )) as {
     patient: {
@@ -89,14 +150,16 @@ async function main(): Promise<void> {
   };
   console.log(`  ${C.green}✓${C.reset} ${profile.patient.name}, ${profile.patient.age}${profile.patient.gender[0]?.toUpperCase()}`);
   console.log(`  ${C.green}✓${C.reset} Diagnoses: ${profile.patient.diagnoses.map((d) => d.description).join(", ")}`);
-  console.log(`  ${C.green}✓${C.reset} Prior failed: ${profile.patient.prior_failed_treatments.map((t) => `${t.name} (${t.duration})`).join(", ")}`);
+  if (profile.patient.prior_failed_treatments.length > 0) {
+    console.log(`  ${C.green}✓${C.reset} Prior failed: ${profile.patient.prior_failed_treatments.map((t) => `${t.name} (${t.duration})`).join(", ")}`);
+  }
   console.log(`  ${C.green}✓${C.reset} Labs: ${profile.patient.lab_results.length} results`);
   console.log(`  ${C.green}✓${C.reset} Prescriber: ${profile.patient.prescriber ?? "n/a"}`);
 
   step(2, 4, "lookup_pa_criteria - fetching insurance plan requirements");
   const criteriaResult = (await callTool("lookup_pa_criteria", {
-    insurance_plan: PLAN,
-    drug_key: DRUG,
+    insurance_plan: PATIENT.plan,
+    drug_key: PATIENT.drug,
   })) as {
     found: boolean;
     criteria_data: { brand_name: string; criteria: Array<{ id: string; required: boolean; description: string }> };
@@ -140,7 +203,7 @@ async function main(): Promise<void> {
   header(`COMPLETE - End-to-end PA workflow in ${elapsed}s`);
   console.log("");
   console.log(`${C.green}${C.bold}  Recommendation: ${assessment.overall_recommendation}${C.reset}`);
-  console.log(`${C.green}  Letter ready for submission to ${PLAN}${C.reset}`);
+  console.log(`${C.green}  Letter ready for submission to ${PATIENT.plan}${C.reset}`);
   console.log("");
 }
 
