@@ -11,7 +11,8 @@
     "start": "tsx src/index.ts",
     "build": "tsc",
     "start:compiled": "node dist/index.js",
-    "upload-fhir": "tsx scripts/upload-fhir-data.ts"
+    "upload-fhir": "tsx scripts/upload-fhir-data.ts",
+    "demo": "tsx scripts/demo.ts"
   },
   "keywords": [
     "mcp",
